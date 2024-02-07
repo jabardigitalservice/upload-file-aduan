@@ -2,28 +2,7 @@
   <div class="px-3 xl:px-0 max-w-3xl mx-auto">
     <div class="font-lato text-gray-800">
       <slot name="header" />
-      <div class="flex items-center justify-between">
-        <div>
-          <label
-            for="delete-image-times"
-            class="block mb-2 text-sm font-bold text-gray-900"
-            >Auto Delete Image :
-          </label>
-          <select
-            v-model="selectedDuration"
-            id="delete-image-times"
-            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"
-          >
-            <option
-              v-for="option in durationOptions"
-              :key="option.value"
-              :value="option.value"
-            >
-              {{ option.label }}
-            </option>
-          </select>
-        </div>
-
+      <div class="flex items-center justify-end">
         <div>
           <label
             for="delete-image-times"
@@ -289,17 +268,10 @@ const formatFileIsCompatible = () => {
   return props.detailDragAndDrop.formatTypeFile.includes(files.value.type);
 };
 
-const selectedDuration = ref(604800);
-const durationOptions = reactive([
-  { value: 604800, label: "Setelah 1 Minggu" },
-  { value: 1209600, label: "Setelah 2 Minggu" },
-  { value: 1814400, label: "Setelah 3 Minggu" },
-  { value: 2592000, label: "Setelah 1 Bulan" },
-  { value: 5184000, label: "Setelah 2 Bulan" },
-]);
+
 
 const onUploadFile = async () => {
-  emit("uploadFile", { file: files.value, seconds: selectedDuration.value });
+  emit("uploadFile", { file: files.value });
 };
 
 const pasteFile = (e) => {

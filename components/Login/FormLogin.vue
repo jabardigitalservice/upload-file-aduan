@@ -1,37 +1,6 @@
 <template>
-  <form class="mt-[44px] mx-6" @submit.prevent="onFormSubmit">
+  <form class="mt-[30px] mx-6" @submit.prevent="onFormSubmit">
     <div class="mb-4">
-      <label for="E-mail" class="block mb-2 text-sm text-gray-800"
-        >E-mail</label
-      >
-      <div class="flex">
-        <span
-          class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border rounded-e-0 border-gray-300 rounded-s-md"
-          :class="{ 'is-invalid': eEmail.length }"
-        >
-          <IconSvg
-            class="w-5 h-5 mb-1 stroke-current"
-            icon="/icons/common/email.svg"
-            :size="20"
-            fillColor="#616161"
-          />
-        </span>
-        <input
-          type="text"
-          id="E-mail"
-          v-model="fields.email"
-          class="rounded-none rounded-e-lg bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5"
-          placeholder="Contoh: agus.permadi@gmail.com"
-          :disabled="processed"
-        />
-      </div>
-      <div class="text-red-500 text-sm">
-        <div v-for="(msg, i) in eEmail" :key="i">{{ msg }}</div>
-      </div>
-
-      <label for="password" class="block mb-2 text-sm text-gray-800 mt-4"
-        >Password</label
-      >
       <div class="flex">
         <span
           class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border rounded-e-0 border-gray-300 rounded-s-md"
@@ -77,24 +46,16 @@
 </template>
 
 <script setup>
-import { required, helpers, email } from "@vuelidate/validators";
+import { required, helpers } from "@vuelidate/validators";
 
 const emit = defineEmits(["success", "failed"]);
 const processed = ref(false);
 const fields = reactive({
-  email: null,
   password: null,
 });
 
 const v$ = useValidator(
   {
-    email: {
-      required: helpers.withMessage(
-        "This value should not be blank.",
-        required
-      ),
-      email: helpers.withMessage("Please enter a valid email address.", email),
-    },
     password: {
       required: helpers.withMessage(
         "This value should not be blank.",
@@ -105,7 +66,6 @@ const v$ = useValidator(
   fields
 );
 
-const eEmail = computed(() => v$.getError("email"));
 const ePassword = computed(() => v$.getError("password"));
 
 async function onFormSubmit() {

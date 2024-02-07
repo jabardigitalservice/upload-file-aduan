@@ -31,28 +31,27 @@ const state = reactive({
 const detailDragAndDrop = ref({
   informationSizeCompatible: "Ukuran file tidak boleh melebihi 10 MB.",
   informationFormatCompatible:
-    "Hanya file yang berformat JPG/JPEG/PNG/SVG/MP4/WEBM yang dapat diupload.",
+    "Hanya file yang berformat JPG/JPEG/PNG/SVG yang dapat diupload.",
   formatTypeFile: [
     "image/jpeg",
     "image/png",
     "image/jpg",
     "image/svg+xml",
-    "video/mp4",
-    "video/webm",
   ],
   maxSizeFile: 10485760,
-  acceptFile: ".jpg,.jpeg,.png,.svg,video/*",
+  acceptFile: ".jpg,.jpeg,.png,.svg",
 });
 
 const uploadFile = async (value) => {
   resetImageLink();
   state.loading = true;
   const formData = new FormData();
+  console.log(formData)
   formData.append("file", value.file);
-  formData.append("seconds", value.seconds);
+  formData.append("category", 'aduan');
   try {
     const { data } = await useFetch(
-      runtimeConfig.public.apiBase + "/v1/upload",
+      runtimeConfig.public.apiBase + "/v1/images",
       {
         method: "post",
         body: formData,
